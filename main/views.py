@@ -9,13 +9,13 @@ def index_view(request):
 
     if request.method == "POST":
         form = AramaForm(request.POST)
+        if form.is_valid():
+            githubname=form.cleaned_data['githubname']
 
-        githubname=form.cleaned_data.get("githubname")
-
-        response=requests.get(base_url+githubname)
-        user_info=response.json()
-        profile = user_info
-        return render(request, 'index.html',profile)
+            response=requests.get(base_url+githubname)
+            user_info=response.json()
+            profile = user_info
+            return render(request, 'index.html',profile)
 
     else:
 
