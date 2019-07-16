@@ -1,4 +1,5 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render
+from .forms import AramaForm
 import requests
 
 # Create your views here.
@@ -7,7 +8,9 @@ base_url="https://api.github.com/users/"
 def index_view(request):
 
     if request.method == "POST":
-        githubname=request.form.get("githubname")
+        form = AramaForm(request.POST)
+
+        githubname=form.cleaned_data.get("githubname")
 
         response=requests.get(base_url+githubname)
         user_info=response.json()
