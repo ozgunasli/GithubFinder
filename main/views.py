@@ -17,13 +17,22 @@ def index_view(request):
 
             githubname = form.cleaned_data.get('githubname')
 
-            response=requests.get(base_url+githubname)
+            response_user=requests.get(base_url+githubname)
+            response_repo = requests.get(base_url + githubname + "/repos")
 
-            user_info=response.json()
+            user_info=response_user.json()
+            repos=response_repo.json()
 
             profile = user_info
 
-            return render(request, 'index.html',{'profile':profile})
+            '''if "message" in user_info:
+
+                return render("index.html", error="Kullanıcı Bulunamadı...")
+            else:
+
+            '''
+
+            return render(request, 'index.html',{'profile':profile,'repos':repos})
 
     else:
 
